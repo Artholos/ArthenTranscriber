@@ -45,27 +45,32 @@ def MONEY_TIME(vfp):
     das_text = '\n'.join(la_text)
 
     # Segment Texts
-    de_text = ""
+    del_text = ""
     seggus = whisper_output['segments']
     for dills in seggus:
         stt = dills['start']
         txticles = dills['text']
-        de_text += str(stt) + " - " + str(txticles) + '\n'
+        del_text += str(stt) + " - " + str(txticles) + '\n'
 
         
     print(f"The Transcription was: {das_text}")
-    print(f"The Time Coded Transcription was: {de_text}")
+    print(f"The Time Coded Transcription was: {del_text}")
 
     try:
         with open(nfp, "w") as f:
             f.write("Text Transcription - No Timecodes" + '\n')
             f.write(str(das_text))
             f.write('\n' + '\n' + "Time Coded Text Transcription" + '\n')
+            f.write(str(del_text))
     except UnicodeEncodeError:
         new_das_text = re.sub(r'[^\x00-\x7F]+', '', das_text)
+        new_del_text = re.sub(r'[^\x00-\x7F]+', '', del_text)
         print(f"Error occured in text. New text is: {new_das_text}")
         with open(nfp, "w") as f:
+            f.write("Text Transcription - No Timecodes" + '\n')
             f.write(str(new_das_text))
+            f.write('\n' + '\n' + "Time Coded Text Transcription" + '\n')
+            f.write(str(new_del_text))
 
     #button1.config(text = "Choose a Video to Transcribe.")
     print("Job Done!")
