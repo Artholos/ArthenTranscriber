@@ -1,4 +1,2 @@
-ffmpeg_python==0.2.0
-openai_whisper==20231117
-torch==2.1.0+cu118
-torch==2.1.2+cu118
+ffmpeg_python
+openai_whisper
