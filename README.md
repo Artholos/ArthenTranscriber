@@ -1,7 +1,7 @@
 Recommended Python 3.11.5 (Since that's what I used to make it), but it should work on anything 3.9+ but not 3.12! It doesn't work on 3.12 as of writing this.
 
 Installation and prep:
-1. Install Python 3.11.5 (Or whatever version you wanna use, I'm not your mom): https://www.python.org/downloads/release/python-3115/
+1. Install Python 3.11.5 (Or whatever version you wanna use, I'm not your mom): https://www.python.org/downloads/release/python-3115/ (MAKE SURE TO ADD TO PATH AT THE END OF INSTALLATION!)
 2. Create a directory for the program and put the VideoTranscriber.py and requirements.txt in it.
 3. Open a cmd/terminal in the program folder and run the setup files.
    Windows > Setup-Windows.bat
