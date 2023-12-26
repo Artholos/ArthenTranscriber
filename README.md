@@ -22,3 +22,14 @@ Mac:
 ```install --upgrade pip```
 
 Now you can run either the VideoTranscriber.py file directly and it should work probably... Best to use the bat/sh file to run it since it will make sure to use the venv.
+
+
+HOW TO USE:
+
+Once the program is started, it can take several minutes for the program to warm up and the UI to appear. Don't worry, it does take an honest minute or two.
+
+Then simply click the button, choose a .mp4 video file (needs to be using h.265 codec). And let the magic happen!
+
+* Please note that the first time you run it can take a minute or two to fetch the transription model from OpenAI. After that it will run right away everytime.
+
+Finally, your transcription document will be created in the same folder as your video file. The file will be named like your video file: "____-Transcription.txt".
