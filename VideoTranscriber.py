@@ -1,4 +1,4 @@
-import os, re
+import os, re, math
 import torch, whisper, ffmpeg
 import tkinter as tk
 from tkinter import filedialog
@@ -22,6 +22,17 @@ def save_transcription(texticles):
     except UnicodeEncodeError:
         sentences = [re.sub(r'[^\x00-\x7F]+', '', sentence) for sentence in sentences]
         return '\n'.join(sentences)
+    
+def time_slice(seconds):
+    hours = math.floor(seconds / 3600)
+    seconds -= hours * 3600
+    minutes = math.floor(seconds / 60)
+    seconds -= minutes * 60
+    seconds = math.floor(seconds)
+    if hours == 0:
+        return '{:02d}:{:02d}'.format(minutes, seconds)
+    else:
+        return '{:02d}:{:02d}:{:02d}'.format(hours, minutes, seconds)
 
 def MONEY_TIME(vfp):
     print("Zug Zug!")
@@ -48,7 +59,7 @@ def MONEY_TIME(vfp):
     del_text = ""
     seggus = whisper_output['segments']
     for dills in seggus:
-        stt = dills['start']
+        stt = time_slice(dills['start'])
         txticles = dills['text']
         del_text += str(stt) + " - " + str(txticles) + '\n'
 
