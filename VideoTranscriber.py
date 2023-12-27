@@ -46,7 +46,6 @@ def MONEY_TIME(vfp):
 
     print("Transcribe time!")
     whisper_output = TheWhisperer.transcribe(afp, fp16=False)
-    #print(f"DEY OUTPEWT WAS ALL DISHEET!!: {whisper_output}")
     os.remove(afp)
     nfp = vfp.replace(".mp4", "-Transcription.txt")
 
@@ -67,6 +66,7 @@ def MONEY_TIME(vfp):
     print(f"The Transcription was: {das_text}")
     print(f"The Time Coded Transcription was: {del_text}")
 
+    # Write the transcription to the text file!
     try:
         with open(nfp, "w") as f:
             f.write("Text Transcription - No Timecodes" + '\n')
