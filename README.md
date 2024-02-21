@@ -2,11 +2,14 @@ Recommended Python 3.11.5 (Since that's what I used to make it), but it should w
 
 Installation and prep:
 1. Install Python 3.11.5 (Or whatever version you wanna use, I'm not your mom): https://www.python.org/downloads/release/python-3115/ (MAKE SURE TO ADD TO PATH AT THE END OF INSTALLATION!)
-2. Create a directory for the program and put the VideoTranscriber.py and requirements.txt in it, along with your OS's Run file.
-3. Open a cmd/terminal in the program folder and run the setup files.  
-Windows > RunTranscriber-Windows.bat  
-Mac > RunTranscriber-Mac.sh  
-OR > Use the commands below to set up the environment manually:  
+2. Download the latest Release from the right hand side of the webpage.
+3. Unzip the folder.
+4. Choose one of the options below:
+
+
+Windows > Click on ArthenTranscriber-Windows.bat
+Mac > Click on ArthenTranscriber-Mac.sh  
+Advanced > Use the commands below (in order) to set up the environment manually:  
 
 Windows:
 ```py -3.11 -m venv venv```
@@ -25,6 +28,8 @@ Now you can run either the VideoTranscriber.py file directly and it should work 
 
 
 HOW TO USE:
+
+Click on eiter 'ArthenTranscriber-Windows.bat' or 'ArthenTranscriber-Mac.sh' to start the program.
 
 Once the program is started, it can take several minutes for the program to warm up and the UI to appear. Don't worry, it does take an honest minute or two.
 
