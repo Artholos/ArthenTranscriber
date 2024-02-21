@@ -31,23 +31,25 @@ def time_slice(seconds):
     seconds -= hours * 3600
     minutes = math.floor(seconds / 60)
     seconds -= minutes * 60
+    miliseconds = seconds - math.floor(seconds)
     seconds = math.floor(seconds)
-    if hours == 0:
-        return '{:02d}:{:02d}'.format(minutes, seconds)
-    else:
-        return '{:02d}:{:02d}:{:02d}'.format(hours, minutes, seconds)
+    return '{:02d}:{:02d}:{:02d},{:03d}'.format(hours, minutes, seconds, int(miliseconds * 100))
 
 def is_mp3(vfp):
     if vfp.endswith(".mp3"):
-        return True
+        filetype = "mp3"
+    elif vfp.endswith(".wav"):
+        filetype = "wav"
     else:
-        return False
+        filetype = "mp4"
+    return filetype
 
 def MONEY_TIME(vfp):
     print("Zug Zug!")
     #button1.config(text = "Transcribing...")
 
-    if is_mp3(vfp):
+    filetype = is_mp3(vfp)
+    if filetype == "mp4":
         print("Video File")
         afp = vfp.replace(".mp4", ".mp3")
         video_stream = ffmpeg.input(vfp)
@@ -61,8 +63,9 @@ def MONEY_TIME(vfp):
     print("Transcribe time!")
     whisper_output = TheWhisperer.transcribe(afp, fp16=False)
     print(whisper_output)
-    os.remove(afp)
-    nfp = vfp.replace(".mp4", "-Transcription.txt")
+    #os.remove(afp)
+    nfp = vfp.replace(f".{filetype}", "-Transcription.txt")
+    srt = vfp.replace(f".{filetype}", "-Transcription.srt")
 
     # Raw Text
     el_text = whisper_output['text']
@@ -72,10 +75,13 @@ def MONEY_TIME(vfp):
     # Segment Texts
     del_text = ""
     seggus = whisper_output['segments']
+    counter = 1
     for dills in seggus:
-        stt = time_slice(dills['start'])
+        stts = time_slice(dills['start'])
+        stte = time_slice(dills['end'])
         txticles = dills['text']
-        del_text += str(stt) + " - " + str(txticles) + '\n'
+        del_text += str(counter) + " " + str(stts) + " --> " + str(stte) + str(txticles) + '\n'
+        counter += 1
 
         
     print(f"The Transcription was: {das_text}")
@@ -83,20 +89,24 @@ def MONEY_TIME(vfp):
 
     # Write Text File
     try:
-        with open(nfp, "w") as f:
-            f.write("Time Coded Text Transcription:" + '\n')
-            f.write(str(del_text))
-            f.write('\n' + '\n' + "Raw Text Transcription:" + '\n')
-            f.write(str(das_text))
+        with open(nfp, "w") as f1:
+            f1.write("Time Coded Text Transcription:" + '\n')
+            f1.write(str(del_text))
+            f1.write('\n' + '\n' + "Raw Text Transcription:" + '\n')
+            f1.write(str(das_text))
+        with open(srt, "w") as f2:
+            f2.write(str(del_text))
     except UnicodeEncodeError:
         new_das_text = re.sub(r'[^\x00-\x7F]+', '', das_text)
         new_del_text = re.sub(r'[^\x00-\x7F]+', '', del_text)
         print(f"Error occured in text. New text is: {new_das_text}")
-        with open(nfp, "w") as f:
-            f.write("Text Transcription - No Timecodes" + '\n')
-            f.write(str(new_del_text))
-            f.write('\n' + '\n' + "Time Coded Text Transcription" + '\n')
-            f.write(str(new_das_text))
+        with open(nfp, "w") as f1:
+            f1.write("Time Coded Text Transcription:" + '\n')
+            f1.write(str(new_del_text))
+            f1.write('\n' + '\n' + "Raw Text Transcription:" + '\n')
+            f1.write(str(new_das_text))
+        with open(srt, "w") as f2:
+            f2.write(str(new_del_text))
 
     #button1.config(text = "Choose a Video to Transcribe.")
     print("Job Done!")
@@ -116,7 +126,7 @@ def button_click():
 
 root = tk.Tk()
 root.geometry("300x100")
-root.title("Arthen-VideoTransriber v11.2")
+root.title("ArthenTransriber v11.3")
 
 button1 = tk.Button(root, text="Choose a Video/Audio file to Transcribe.", command=button_click)
 button1.pack(pady = 20)
