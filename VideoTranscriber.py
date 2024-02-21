@@ -4,14 +4,17 @@ import tkinter as tk
 from tkinter import filedialog
 
 os.environ['PYTHONIOENCODING'] = 'utf-8'
+rwd = os.path.dirname(os.path.abspath(os.path.realpath(__file__)))
 
 def spool_whisper_model():
+    global rwd
+    model_dir = os.path.join(rwd, 'Model')
     if torch.cuda.is_available():
         print("Cuda Time!")
-        TheWhisperer = whisper.load_model('large-v2', device='cuda')
+        TheWhisperer = whisper.load_model('large-v3', device='cuda', download_root=model_dir)
     else:
         print("CPU Time :c")
-        TheWhisperer = whisper.load_model('large-v2')
+        TheWhisperer = whisper.load_model('large-v3', download_root=model_dir)
     return TheWhisperer
 TheWhisperer = spool_whisper_model()
 
@@ -46,6 +49,7 @@ def MONEY_TIME(vfp):
 
     print("Transcribe time!")
     whisper_output = TheWhisperer.transcribe(afp, fp16=False)
+    print(whisper_output)
     os.remove(afp)
     nfp = vfp.replace(".mp4", "-Transcription.txt")
 
@@ -66,22 +70,22 @@ def MONEY_TIME(vfp):
     print(f"The Transcription was: {das_text}")
     print(f"The Time Coded Transcription was: {del_text}")
 
-    # Write the transcription to the text file!
+    # Write Text File
     try:
         with open(nfp, "w") as f:
-            f.write("Text Transcription - No Timecodes" + '\n')
-            f.write(str(das_text))
-            f.write('\n' + '\n' + "Time Coded Text Transcription" + '\n')
+            f.write("Time Coded Text Transcription:" + '\n')
             f.write(str(del_text))
+            f.write('\n' + '\n' + "Raw Text Transcription:" + '\n')
+            f.write(str(das_text))
     except UnicodeEncodeError:
         new_das_text = re.sub(r'[^\x00-\x7F]+', '', das_text)
         new_del_text = re.sub(r'[^\x00-\x7F]+', '', del_text)
         print(f"Error occured in text. New text is: {new_das_text}")
         with open(nfp, "w") as f:
             f.write("Text Transcription - No Timecodes" + '\n')
-            f.write(str(new_das_text))
-            f.write('\n' + '\n' + "Time Coded Text Transcription" + '\n')
             f.write(str(new_del_text))
+            f.write('\n' + '\n' + "Time Coded Text Transcription" + '\n')
+            f.write(str(new_das_text))
 
     #button1.config(text = "Choose a Video to Transcribe.")
     print("Job Done!")
