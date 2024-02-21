@@ -29,7 +29,7 @@ Now you can run either the VideoTranscriber.py file directly and it should work 
 
 HOW TO USE:
 
-Click on eiter 'ArthenTranscriber-Windows.bat' or 'ArthenTranscriber-Mac.sh' to start the program.
+Click on either 'ArthenTranscriber-Windows.bat' or 'ArthenTranscriber-Mac.sh' to start the program.
 
 Once the program is started, it can take several minutes for the program to warm up and the UI to appear. Don't worry, it does take an honest minute or two.
 
