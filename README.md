@@ -7,9 +7,12 @@ Installation and prep:
 4. Choose one of the options below:
 
 
-Windows > Click on ArthenTranscriber-Windows.bat
-Mac > Click on ArthenTranscriber-Mac.sh  
-Advanced > Use the commands below (in order) to set up the environment manually:  
+If you're on Windows > Click on ArthenTranscriber-Windows.bat
+
+If you're on Mac > Click on ArthenTranscriber-Mac.sh  
+
+
+Or for advanced users > Use the commands below (in order) to set up the environment manually:  
 
 Windows:
 ```py -3.11 -m venv venv```
